@@ -166,8 +166,3 @@ ggplot(pokemon,aes(x=Sp_Atk,y=Sp_Def,col=Type_1))+geom_point()+ggtitle('Special 
  We can see just a little dependencie between the variables, maybe due to the level of the pokémons. When the pokémons evolve, they increase their numbers.
 
 
-## Nodebox visualization.
-
- Here we can see a visualization done using nodebox. I did it using only HP, Attack, Defense and type becouse it is so much clean using only these variables. In the visualization we can see the numbers of all the pokémons, and the means by type.
-
-![Caption for the picture.](C:\Users\AlvaroSanchez91\Desktop\Master Big Data Sevilla\VISIN Visualización de la información\pok.png)
