@@ -1,0 +1,173 @@
+---
+title: "Pokemón Visualization"
+author: "Álvaro Sánchez Castañeda"
+date: "26 de abril de 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+ In this document we can see a brief visual exploratory of the pokémon data set provided by kaggle: https://www.kaggle.com/alopez247/pokemon. My first videogame was the blue edition of pokémon, so i decided to do this analisys only with the first generation data.
+ 
+ We will work with nine features: Name (Bulbasaur, Charmander...),Type of pokemon (fire, water...), Total (the sum of the numeric features), HP , Attack, Defense, Special Attack, Special Defense, and Speed. Lets start seeing how are distributed those features.
+
+### Histogram of each variable.
+
+```{r , echo=FALSE, message=FALSE, warning=FALSE}
+library(ggplot2)
+pokemon=read.csv("D:/Ciencia de Datos/kaggle/Pokémon/pokemon_generation_1.csv")
+
+
+ggplot(pokemon, aes(Total))+geom_histogram(aes(fill=..count..),bins = 20)+
+  scale_fill_gradient("Count", low = "black", high = "white")+ylab('frequency')+xlab('Sum of all features.')+ggtitle("Total")
+
+
+```
+
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(pokemon, aes(HP))+geom_histogram(aes(fill=..count..),bins = 20)+
+  scale_fill_gradient("Count", low = "red4", high = "red")+ylab('frequency')+ggtitle("HP")
+```
+
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(pokemon, aes(Attack))+geom_histogram(aes(fill=..count..),bins = 20)+
+  scale_fill_gradient("Count", low = "yellow4", high = "yellow")+ylab('frequency')+ggtitle("Attack")
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(pokemon, aes(Defense))+geom_histogram(aes(fill=..count..),bins = 20)+ylab('frequency')+ggtitle("Defense")
+
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(pokemon, aes(Sp_Atk))+geom_histogram(aes(fill=..count..),bins = 20)+
+  scale_fill_gradient("Count", low = "yellow4", high = "yellow")+ylab('frequency')+xlab('Special Attack')+ggtitle("Special Attack")
+
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(pokemon, aes(Sp_Def))+geom_histogram(aes(fill=..count..),bins = 20)+ylab('frequency')+xlab('Special Defense')+ggtitle("Special Defense")
+
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(pokemon, aes(Speed))+geom_histogram(aes(fill=..count..),bins = 20)+
+  scale_fill_gradient("Count", low = "green4", high = "green")+ylab('frequency')+ggtitle("Speed")
+```
+
+
+### Boxplots depending on type.
+ Now, lets compare the previuos features depending on the type of pokémon.
+
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+ggplot(pokemon, aes(Type_1,Total,fill=Type_1))+geom_boxplot()+ scale_fill_hue(l=50, c=55)+
+  theme(axis.text=element_text(size=7))+ggtitle("Total")
+```
+
+
+ In general, we can think that ice pokémon are better, but also we can see some Psychic pokémon with high numbers.
+
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(pokemon, aes(Type_1,HP,fill=Type_1))+geom_boxplot()+ scale_fill_hue(l=50, c=55)+
+  theme(axis.text=element_text(size=7))+ggtitle("HP")
+```
+
+
+ Here the ghosts are the worsts, and the normal and fairy seems the best (we can see two atipical values). Although that, the results are similar.
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(pokemon, aes(Type_1,Attack,fill=Type_1))+geom_boxplot()+ scale_fill_hue(l=50, c=55)+
+  theme(axis.text=element_text(size=7))+ggtitle("Attack")
+```
+
+
+ We can see that fighting pokemon have the best attack, while faiy and ghost seems the worsts. But we have a high variances in some groups, so it's dificult to take conclussions.
+ 
+ 
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(pokemon, aes(Type_1,Defense,fill=Type_1))+geom_boxplot()+ scale_fill_hue(l=50, c=55)+
+  theme(axis.text=element_text(size=7))+ggtitle("Defense")
+```
+
+
+ Rock pokemón seems to have the best defense, and ghosts the worst. In the rest of groups the results are similar, although whe have some atipical values.
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(pokemon, aes(Type_1,Sp_Atk,fill=Type_1))+geom_boxplot()+ scale_fill_hue(l=50, c=55)+
+  theme(axis.text=element_text(size=7))+ggtitle("Special Attack")
+```
+
+
+ We can see that psychics and ghosts have the bests numbers in special attack, as we expected. We can see that here the variances are quite low, and the special attack depend on the group.
+ 
+ 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(pokemon, aes(Type_1,Sp_Def,fill=Type_1))+geom_boxplot()+ scale_fill_hue(l=50, c=55)+
+  theme(axis.text=element_text(size=7))+ggtitle("Special Defense")
+```
+
+
+ Most of the groups have similar values in special defense, but ice and psychic (both of them have the bests results). Bug have a really high variance with a low special defense for some pokémon.
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(pokemon, aes(Type_1,Speed,fill=Type_1))+geom_boxplot()+ scale_fill_hue(l=50, c=55)+
+  theme(axis.text=element_text(size=7))+ggtitle("Speed")
+```
+
+
+ Electric and psychic have the highest values in speed (others group have similar ones), while fairy and ground seems to have the worsts.
+
+### Looking for correlated variables.
+
+ We cold try to look for dependencies betwen some variables, lets look the correlations to see wich variables should we compare.
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(corrplot)
+corrplot(cor(pokemon[,c(7:12)]),method='ellipse')
+```
+
+
+
+ The highes variables are produced by attack with defense, HP with special defense, and special attack with special defense.
+
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(pokemon,aes(x=Attack,y=Defense,col=Type_1))+geom_point()+ggtitle('Defense vs Attack')
+```
+
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(pokemon,aes(x=HP,y=Sp_Def,col=Type_1))+geom_point()+ggtitle('HP vs Special Defense')+ylab('Special Defense')
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(pokemon,aes(x=Sp_Atk,y=Sp_Def,col=Type_1))+geom_point()+ggtitle('Special Attack vs Special Defense')+xlab('Special Attack')+ylab('Special Defense')
+```
+
+
+ We can see just a little dependencie between the variables, maybe due to the level of the pokémons. When the pokémons evolve, they increase their numbers.
+
+
+## Nodebox visualization.
+
+ Here we can see a visualization done using nodebox. I did it using only HP, Attack, Defense and type becouse it is so much clean using only these variables. In the visualization we can see the numbers of all the pokémons, and the means by type.
+
+![Caption for the picture.](C:\Users\AlvaroSanchez91\Desktop\Master Big Data Sevilla\VISIN Visualización de la información\pok.png)
