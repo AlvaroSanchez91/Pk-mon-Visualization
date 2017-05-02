@@ -2,8 +2,9 @@
 title: "Pokemón Visualization"
 author: "Álvaro Sánchez Castañeda"
 date: "26 de abril de 2017"
-output: html_document
+output: md_document
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
