@@ -1,4 +1,4 @@
-﻿#Pokémon visualization using R and ggplot2.
+﻿# Pokémon visualization using R and ggplot2.
 
 In this document we can see a brief visual exploratory of the pokémon
 data set provided by kaggle: <https://www.kaggle.com/alopez247/pokemon>.
