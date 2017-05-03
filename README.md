@@ -9,5 +9,3 @@ this analisys only with the first generation data.
 I recomend the .md documents to read, inside you will find the R code.
 ## NodeBox visualization.
 We can see the result of the work in pok.pdf. 
-
-# Sonia es muy pequeña
